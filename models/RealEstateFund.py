@@ -1,5 +1,5 @@
-class Fundo:
-    def __init__(self,codigo, segmento, cotacao_atual, ffo_yield, dividend_yield, p_vp, valor_mercado, liquidez, qt_imoveis, preco_m2, aluguel_m2, cap_rate, vacancia_media ):
+class RealEstateFund:
+    def __init__(self, codigo, segmento, cotacao_atual, ffo_yield, dividend_yield, p_vp, valor_mercado, liquidez, qt_imoveis, preco_m2, aluguel_m2, cap_rate, vacancia_media ):
         self.codigo = codigo
         self.segmento = segmento
         self.cotacao_atual = cotacao_atual

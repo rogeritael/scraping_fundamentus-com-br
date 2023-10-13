@@ -3,7 +3,8 @@ from bs4 import BeautifulSoup
 import locale
 import tabulate
 
-# helpers
+# helpers e models
+from models.RealEstateFund import RealEstateFund
 from helpers.format_percent import format_percent
 from helpers.format_decimal import format_decimal
 
@@ -38,4 +39,5 @@ for line in lines:
     cap_rate = format_percent(data[11].text)
     vacancia_media = format_percent(data[12].text)
 
-    print(cotacao_atual)
+    realestate_fund = RealEstateFund(codigo, segmento, cotacao_atual, ffo_yield, dividend_yield, p_vp, valor_mercado, liquidez, qt_imoveis, preco_m2, aluguel_m2, cap_rate, vacancia_media)
+    print(realestate_fund)
