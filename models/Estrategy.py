@@ -18,7 +18,7 @@ class Estrategy:
     def runEstrategy(self, fund: RealEstateFund):
         if self.segmento != '':
             if fund.segmento != self.segmento:
-                return false
+                return False
 
         if fund.cotacao_atual < self.cotacao_atual_minimum \
             or fund.ffo_yield < self.ffo_yield_minimum \

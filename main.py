@@ -1,12 +1,14 @@
 import requests
 from bs4 import BeautifulSoup
 import locale
-import tabulate
+from tabulate import tabulate
 
 # helpers e models
 from models.RealEstateFund import RealEstateFund
+from models.Estrategy import Estrategy
 from helpers.format_percent import format_percent
 from helpers.format_decimal import format_decimal
+from helpers.printTable import printTable
 
 #altera o sistema monetários do sistema Brasileiro para o sistema americano, com .
 locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
@@ -21,6 +23,22 @@ soup = BeautifulSoup(response.text, 'html.parser')
 
 #busca pelo id
 lines = soup.find(id='tabelaResultado').find('tbody').find_all('tr')
+
+result = []
+
+myEstrategy = Estrategy(
+    cotacao_atual_minimum=50.0,
+    dividend_yield_minimum=5,
+    p_vp_minimum=0.70,
+    valor_mercado_minimum=200000000,
+    liquidez_minimum=50000,
+    qt_imoveis_minimum=5,
+    vacancia_media_maximum=10
+    # ffo_yield_minimum=,
+    # preco_m2,
+    # aluguel_m2,
+    # cap_rate,
+)
 
 for line in lines:
     data = line.find_all('td')
@@ -39,5 +57,10 @@ for line in lines:
     cap_rate = format_percent(data[11].text)
     vacancia_media = format_percent(data[12].text)
 
+
+    #retorna os fundos que correspondem ao nosso filtro
     realestate_fund = RealEstateFund(codigo, segmento, cotacao_atual, ffo_yield, dividend_yield, p_vp, valor_mercado, liquidez, qt_imoveis, preco_m2, aluguel_m2, cap_rate, vacancia_media)
-    print(realestate_fund)
+    if myEstrategy.runEstrategy(realestate_fund):
+        result.append(realestate_fund)   
+
+printTable(result)
